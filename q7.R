@@ -1,26 +1,31 @@
-#Develop a program to generate the Fibonacci series, but with a twist. Allow the user to
-#input the number of terms and generate the series where each term is the sum of the
-#last three terms.
+# Develop a program to generate the Fibonacci series, but with a twist. Allow the user to
+# input the number of terms and generate the series where each term is the sum of the
+# last three terms.
 
-# Read the number of terms from the user
-n <- as.integer(readline("Enter the number of terms: "))
 
-# Initialize the first three terms of the series
-a <- 0
-b <- 1
-c <- 1
+generate_series <- function(n) {
+  series <- numeric(n)
+  
+#  Initialize the first three terms
+  series[1] <- 0
+  series[2] <- 1
+  series[3] <- 2
+  
+#  Generate subsequent terms
+  for (i in 4:n) {
+    series[i] <- series[i - 1] + series[i - 2] + series[i - 3]
+  }
+  
+  return(series)
+}
 
-# Print the first three terms
-cat(a, b, c, sep = " ")
+#Input the number of terms from the user
+n <- as.integer(readline("Enter the number of terms in the series: "))
 
-# Loop over the remaining terms
-for (i in 4:n) {
-  # Calculate the next term as the sum of the last three terms
-  d <- a + b + c
-  # Print the next term
-  cat(d, sep = " ")
-  # Update the last three terms
-  a <- b
-  b <- c
-  c <- d
+if (n < 1) {
+  cat("Please enter a valid number of terms greater than or equal to 1.\n")
+} else {
+  series <- generate_series(n)
+  cat("The series with", n, "terms is:\n")
+  cat(series, "\n")
 }

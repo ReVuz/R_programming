@@ -1,33 +1,25 @@
-#Write a program to check whether a given number is prime or not. Implement this using
-#both loops and functions. Additionally, allow the user to input a range and identify all
-#prime numbers within that range.
+# Write a program to check whether a given number is prime or not. Implement this using
+# both loops and functions. Additionally, allow the user to input a range and identify all
+# prime numbers within that range.
 
-# Define a function to check if a number is prime
+# Function to check if a number is prime
 is_prime <- function(n) {
-  # Check if the number is less than 2
-  if (n < 2) {
-    # Return FALSE
+  if (n <= 1) {
     return(FALSE)
   }
-  # Check if the number is 2
-  if (n == 2) {
-    # Return TRUE
+  if (n <= 3) {
     return(TRUE)
   }
-  # Check if the number is even
-  if (n %% 2 == 0) {
-    # Return FALSE
+  if (n %% 2 == 0 || n %% 3 == 0) {
     return(FALSE)
   }
-  # Loop over the odd numbers from 3 to the square root of n
-  for (i in seq(3, sqrt(n), by = 2)) {
-    # Check if the number is divisible by i
-    if (n %% i == 0) {
-      # Return FALSE
+  i <- 5
+  while (i * i <= n) {
+    if (n %% i == 0 || n %% (i + 2) == 0) {
       return(FALSE)
     }
+    i <- i + 6
   }
-  # Return TRUE
   return(TRUE)
 }
 
@@ -44,14 +36,30 @@ if (prime) {
   cat(number, "is not a prime number.\n")
 }
 
-# Read a range from the user
-lower <- as.integer(readline("Enter the lower bound of the range: "))
-upper <- as.integer(readline("Enter the upper bound of the range: "))
+# Function to find prime numbers within a range
 
-# Print the prime numbers within the range using the function
-cat("The prime numbers within the range are:\n")
-for (i in lower:upper) {
-  if (is_prime(i)) {
-    cat(i, "\n")
+find_primes_in_range <- function(start, end) {
+  prime_numbers <- c()
+  for (num in start:end) {
+    if (is_prime(num)) {
+      prime_numbers <- c(prime_numbers, num)
+    }
   }
+  return(prime_numbers)
+}
+
+# Input range from the user
+
+start_range <- as.integer(readline("Enter the start of the range: "))
+end_range <- as.integer(readline("Enter the end of the range: "))
+
+if (start_range >= 2) {
+  primes_in_range <- find_primes_in_range(start_range, end_range)
+  if (length(primes_in_range) > 0) {
+    cat("Prime numbers in the range:", primes_in_range, "\n")
+  } else {
+    cat("No prime numbers in the specified range.\n")
+  }
+} else {
+  cat("Prime numbers start from 2 and above. Please enter a valid range.\n")
 }
